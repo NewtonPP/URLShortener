@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 
+	"os"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/newtonpp/urlshortener/handler"
@@ -18,6 +20,7 @@ func main() {
 		AllowCredentials: true,                                                // Allow cookies
 	}))
 
+	PORT := os.Getenv(("PORT"))
 	r.GET("/", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{
 			"message": "Hey Go URL Shortener",
@@ -35,7 +38,7 @@ func main() {
 
 	store.InitializeStore()
 
-	err := r.Run(":8080")
+	err := r.Run(PORT)
 
 	if err != nil {
 		panic(fmt.Sprintln("Failed to start the web server", err))
